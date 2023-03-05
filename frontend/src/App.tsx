@@ -4,17 +4,29 @@ import './App.css'
 
 import React from 'react'
 
+
+function formatData(data: []) {
+  const formatedData = []
+  for (let key in data) {
+    let symbol = data[key][0].baseCurrency
+    formatedData.push(symbol)
+  }
+
+  return formatedData
+}
+
 function App() {
   const [count, setCount] = useState(0)
 
   const [data, setData] = useState(null)
 
   React.useEffect(() => {
-    fetch("/api")
+    fetch("/api/bybit")
     .then((res) => res.json())
     // .then((res) => console.log(res))
-    .then((data) => setData(data.message))
-  })
+    .then((res) => setData(res.markets))
+
+  }, [])
 
   return (
     <div className="App">
@@ -32,7 +44,13 @@ function App() {
           count is {count}
         </button>
         <p>
-          {!data ? "loading": data}
+          {!data ? "loading": 
+          <ul>
+            {formatData(data).map((symbol) => {
+              return <li>{symbol}</li>
+            })}
+          </ul>
+          }
         </p>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
