@@ -1,0 +1,6 @@
+pandas
+matplotlib
+dydx-v3-python
+asyncio
+aiohttp
+flask
