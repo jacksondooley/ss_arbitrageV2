@@ -21,7 +21,7 @@ function App() {
   const [data, setData] = useState(null)
 
   React.useEffect(() => {
-    fetch("/api/bybit")
+    fetch("/api/linear_markets")
     .then((res) => res.json())
     // .then((res) => console.log(res))
     .then((res) => setData(res.markets))
