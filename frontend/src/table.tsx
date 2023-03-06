@@ -74,8 +74,8 @@ function TableComp() {
 
     return (
         <TableContainer>
-            <Table variant='simple'>
-                <TableCaption>Imperial to metric conversion factors</TableCaption>
+            <Table variant='simple' size='lg' colorScheme="whiteAlpha">
+                <TableCaption placement="top">Funding Rates</TableCaption>
                 <Thead>
                 <Tr>
                     <Th>Currency</Th>
@@ -94,9 +94,6 @@ function TableComp() {
                 }
                 </Tbody>
                 <Tfoot>
-                <Tr>
-                    <Th>To convert</Th>
-                </Tr>
                 </Tfoot>
             </Table>
         </TableContainer>
