@@ -1,19 +1,23 @@
-from bybit.bybit import Bybit
 from flask import Flask
 import asyncio
 import json
 from time import perf_counter
 
-# from kucoin.kucoin import Kucoin
-# from phemex.phemex import Phemex
-# from coinex.coinex import Coinex
+from bybit.bybit import Bybit
+from kucoin.kucoin import Kucoin
+from phemex.phemex import Phemex
+from coinex.coinex import Coinex
 # from hermes import send_message
 
 
 app = Flask(__name__)
 
 bybit = Bybit()
-print(bybit.all_linear_markets)
+coinex = Coinex()
+kucoin = Kucoin()
+phemex = Phemex()
+
+# print(bybit.all_linear_markets)
 # bybitMessage = structure_funding_message(bybit.high_fr_linear_markets, "bybit")
 
 @app.route("/api")
@@ -24,7 +28,18 @@ def hello_world():
 @app.route("/api/<exchange>")
 def fetch_linear_markets(exchange):
     print(exchange)
-    return {"markets": bybit.all_linear_markets}
+    markets = aggregate_all_linear_markets(
+        bybit.all_linear_markets,
+        coinex.all_linear_markets,
+        kucoin.all_linear_markets,
+        phemex.all_linear_markets,
+    )
+    return {"markets": markets}
+
+
+@app.route("/api/markets")
+def fetch_all_linear_markets():
+    return ""
 
 # def structure_funding_message(fundingRates: [], exchangeName: str) -> str:
 #     message = f"---------{exchangeName} Funding Rates---------\n"
@@ -38,15 +53,15 @@ def fetch_linear_markets(exchange):
 
 #     return message
 
-# def aggregate_all_linear_markets(*exchanges) -> {}:
-#     aggregated_markets = {}
-#     for exchange in exchanges:
-#         for market in exchange:
-#             if market not in aggregated_markets.keys():
-#                 aggregated_markets[market] = []
-#             aggregated_markets[market].extend(exchange[market])
+def aggregate_all_linear_markets(*exchanges):
+    aggregated_markets = {}
+    for exchange in exchanges:
+        for market in exchange:
+            if market not in aggregated_markets.keys():
+                aggregated_markets[market] = []
+            aggregated_markets[market].extend(exchange[market])
 
-#     return aggregated_markets
+    return aggregated_markets
 
 # def check_arbitrage_opportunities(high_fr_linear_markets, all_linear_markets):
 #     message = ""

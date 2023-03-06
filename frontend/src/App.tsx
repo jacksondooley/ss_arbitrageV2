@@ -10,8 +10,15 @@ import TableComp from './table'
 function App() {
   const [count, setCount] = useState(0)
 
+  const [data, setData] = useState(null)
 
-
+  React.useEffect(() => {
+    fetch("/api/linear_markets")
+    .then((res) => res.json())
+    // .then((res) => console.log(res))
+    .then((res) => setData(res.markets))
+  }, [])
+  
   return (
     <div className="App">
       <div>
@@ -28,15 +35,6 @@ function App() {
           count is {count}
         </button>
         <TableComp/>
-        {/* <p>
-          {!data ? "loading": 
-          <ul>
-            {formatData(data).map((symbol) => {
-              return <li>{symbol}</li>
-            })}
-          </ul>
-          }
-        </p> */}
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

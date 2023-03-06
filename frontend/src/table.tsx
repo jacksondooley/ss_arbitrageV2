@@ -13,15 +13,17 @@ import {
   import { useState } from 'react'
 
 
-const exchangeEnum = {
+// starts at 1 due to currency being 0
+const exchangeColEnum = {
     "bybit": 1,
     "kucoin": 2,
     "coinex": 3,
+    "phemex": 4,
 }
 
 function getExchangeRow() {
     const exchanges = []
-    for (let exchange in exchangeEnum) {
+    for (let exchange in exchangeColEnum) {
         exchanges.push(
             <Th>
                 {exchange}
@@ -32,19 +34,29 @@ function getExchangeRow() {
     return exchanges
 }
 
-function formatFundingRate(data: []) {
-    const formatedData = []
-    for (let key in data) {
-        console.log(data[key])
-        console.log("--------")
-      let map = {
-        symbol: data[key][0].baseCurrency,
-        fr: data[key][0].fundingRate
+function formatFundingRate(markets: []) {
+    const formatedTable = []
+    // console.log(markets)
+    for (let marketIdx in markets) {
+      const formattedRow = []
+      const market = markets[marketIdx]
+      console.log(market)
+      const exhanges = Object.keys(market)
+      const rows = [
+        <Td>{market[0].baseCurrency}</Td>,
+        <Td>-</Td>,
+        <Td>-</Td>,
+        <Td>-</Td>,
+        <Td>-</Td>
+      ]
+      for (let exchange in exhanges) {
+        const b = market[exchange]
+        rows[exchangeColEnum[b.exchange]] = <Td>{b.fundingRate}</Td>
       }
-      formatedData.push(map)
+      formatedTable.push(rows)
     }
   
-    return formatedData
+    return formatedTable
   }
 
 function TableComp() {
@@ -72,15 +84,10 @@ function TableComp() {
                 </Thead>
                 <Tbody>
                 {
-                    formatFundingRate(data).map((market) => {
+                    formatFundingRate(data).map((row) => {
                         return (
                             <Tr>
-                                <Td>
-                                    {market.symbol}
-                                </Td>
-                                <Td>
-                                    -
-                                </Td>
+                                {row}
                             </Tr>
                         )
                     })
