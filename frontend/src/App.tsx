@@ -1,32 +1,16 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
-
 import React from 'react'
+import TableComp from './table'
 
 
-function formatData(data: []) {
-  const formatedData = []
-  for (let key in data) {
-    let symbol = data[key][0].baseCurrency
-    formatedData.push(symbol)
-  }
 
-  return formatedData
-}
 
 function App() {
   const [count, setCount] = useState(0)
 
-  const [data, setData] = useState(null)
 
-  React.useEffect(() => {
-    fetch("/api/bybit")
-    .then((res) => res.json())
-    // .then((res) => console.log(res))
-    .then((res) => setData(res.markets))
-
-  }, [])
 
   return (
     <div className="App">
@@ -43,7 +27,8 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <p>
+        <TableComp/>
+        {/* <p>
           {!data ? "loading": 
           <ul>
             {formatData(data).map((symbol) => {
@@ -51,7 +36,7 @@ function App() {
             })}
           </ul>
           }
-        </p>
+        </p> */}
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
