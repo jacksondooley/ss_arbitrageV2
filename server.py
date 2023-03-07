@@ -25,9 +25,8 @@ def hello_world():
     return {"message": "test2"}
 
 
-@app.route("/api/<exchange>")
-def fetch_linear_markets(exchange):
-    print(exchange)
+@app.route("/api/fundingRates")
+def fetch_linear_markets():
     markets = aggregate_all_linear_markets(
         bybit.all_linear_markets,
         coinex.all_linear_markets,
@@ -37,7 +36,7 @@ def fetch_linear_markets(exchange):
     return {"markets": markets}
 
 
-@app.route("/api/markets")
+@app.route("/api/highFundingRatesm")
 def fetch_all_linear_markets():
     return ""
 

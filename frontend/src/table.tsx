@@ -12,6 +12,7 @@ import {
   import React from 'react'
   import { useState } from 'react'
 
+import "./table.css"
 
 // starts at 1 due to currency being 0
 const exchangeColEnum = {
@@ -36,13 +37,11 @@ function getExchangeRow() {
 
 function formatFundingRate(markets: []) {
     const formatedTable = []
-    // console.log(markets)
     for (let marketIdx in markets) {
-      const formattedRow = []
       const market = markets[marketIdx]
       console.log(market)
       const exhanges = Object.keys(market)
-      const rows = [
+      const formattedRows = [
         <Td>{market[0].baseCurrency}</Td>,
         <Td>-</Td>,
         <Td>-</Td>,
@@ -51,26 +50,33 @@ function formatFundingRate(markets: []) {
       ]
       for (let exchange in exhanges) {
         const b = market[exchange]
-        rows[exchangeColEnum[b.exchange]] = <Td>{b.fundingRate}</Td>
+        let fr = b.fundingRate
+        if (fr > 0.01) {
+            formattedRows[exchangeColEnum[b.exchange]] = <Td className="neg">{fr}</Td>
+        }
+        else if (fr < 0.01) {
+            formattedRows[exchangeColEnum[b.exchange]] = <Td className="pos">{fr}</Td>
+        }
+        else {
+            formattedRows[exchangeColEnum[b.exchange]] = <Td className="neu">{fr}</Td>
+        }
       }
-      formatedTable.push(rows)
+      formatedTable.push(formattedRows)
     }
   
     return formatedTable
   }
 
-function TableComp() {
-    const [data, setData] = useState(null)
+function TableComp(props) {
+    // const [data, setData] = useState(null)
 
-    React.useEffect(() => {
-      fetch("/api/bybit")
-      .then((res) => res.json())
-      // .then((res) => console.log(res))
-      .then((res) => setData(res.markets))
+    // React.useEffect(() => {
+    //   fetch("/api/bybit")
+    //   .then((res) => res.json())
+    //   // .then((res) => console.log(res))
+    //   .then((res) => setData(res.markets))
   
-    }, [])
-
-
+    // }, [])
 
     return (
         <TableContainer>
@@ -84,7 +90,7 @@ function TableComp() {
                 </Thead>
                 <Tbody>
                 {
-                    formatFundingRate(data).map((row) => {
+                    formatFundingRate(props.fundingData).map((row) => {
                         return (
                             <Tr>
                                 {row}
