@@ -43,11 +43,15 @@ class Bybit:
         return linear_markets
 
     def parse_high_fr_linear_markets(self):
-        high_fr_linear_markets = []
+        high_fr_linear_markets = {}
         for symbol in self.all_linear_markets:
             for market in self.all_linear_markets[symbol]:
                 if market["fundingRate"] > 0.1 or market["fundingRate"] < -0.1:
-                    high_fr_linear_markets.append(market)
+                    baseCurrency = market["baseCurrency"]
+                    if baseCurrency not in high_fr_linear_markets:
+                        high_fr_linear_markets[baseCurrency] = []
+                    
+                    high_fr_linear_markets[baseCurrency].append(market)
 
         return high_fr_linear_markets
 
@@ -56,9 +60,3 @@ class Bybit:
             return symbol[:-4], "USDT"
         elif symbol[-4:] == "PERP":
             return symbol[:-4], "USDC"
-
-bybit = Bybit()
-
-msg = bybit.high_fr_linear_markets
-
-print(msg)

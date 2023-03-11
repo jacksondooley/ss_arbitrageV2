@@ -5,3 +5,8 @@
 .pos {
     color: limegreen;
 }
+
+.column-title > button {
+    justify-content: center;
+    padding: 3px;
+}

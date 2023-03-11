@@ -67,11 +67,15 @@ class Coinex:
         return linear_markets
 
     def parse_high_fr_linear_markets(self):
-        high_fr_linear_markets = []
+        high_fr_linear_markets = {}
         markets = self.all_linear_markets
         for symbol in markets:
             for market in markets[symbol]:
                 if market["fundingRate"] > 0.1 or market["fundingRate"] < -0.1:
-                    high_fr_linear_markets.append(market)
+                    baseCurrency = market["baseCurrency"]
+                    if baseCurrency not in high_fr_linear_markets:
+                        high_fr_linear_markets[baseCurrency] = []
+                    
+                    high_fr_linear_markets[baseCurrency].append(market)
         
         return high_fr_linear_markets

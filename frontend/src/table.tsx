@@ -11,6 +11,7 @@ import {
   } from '@chakra-ui/react'
   import React from 'react'
   import { useState } from 'react'
+  import { ArrowUpDownIcon } from '@chakra-ui/icons'
 
 import "./table.css"
 
@@ -22,36 +23,27 @@ const exchangeColEnum = {
     "phemex": 4,
 }
 
-function getExchangeRow() {
-    const exchanges = []
-    for (let exchange in exchangeColEnum) {
-        exchanges.push(
-            <Th>
-                {exchange}
-            </Th>
-        )
-    }
 
-    return exchanges
-}
+
+
 
 function formatFundingRate(markets: []) {
     const formatedTable = []
     for (let marketIdx in markets) {
-      const market = markets[marketIdx]
-      console.log(market)
-      const exhanges = Object.keys(market)
-      const formattedRows = [
-        <Td>{market[0].baseCurrency}</Td>,
+        const market = markets[marketIdx]
+        console.log(market)
+        const exhanges = Object.keys(market)
+        const formattedRows = [
+            <Td>{market[0].baseCurrency}</Td>,
         <Td>-</Td>,
         <Td>-</Td>,
         <Td>-</Td>,
         <Td>-</Td>
-      ]
+    ]
       for (let exchange in exhanges) {
-        const b = market[exchange]
-        let fr = b.fundingRate
-        if (fr > 0.01) {
+          const b = market[exchange]
+          let fr = b.fundingRate
+          if (fr > 0.01) {
             formattedRows[exchangeColEnum[b.exchange]] = <Td className="neg">{fr}</Td>
         }
         else if (fr < 0.01) {
@@ -65,45 +57,73 @@ function formatFundingRate(markets: []) {
     }
   
     return formatedTable
-  }
-
-function TableComp(props) {
-    // const [data, setData] = useState(null)
-
-    // React.useEffect(() => {
-    //   fetch("/api/bybit")
-    //   .then((res) => res.json())
-    //   // .then((res) => console.log(res))
-    //   .then((res) => setData(res.markets))
-  
-    // }, [])
-
-    return (
-        <TableContainer>
-            <Table variant='simple' size='lg' colorScheme="whiteAlpha">
-                <TableCaption placement="top">Funding Rates</TableCaption>
-                <Thead>
-                <Tr>
-                    <Th>Currency</Th>
-                    {getExchangeRow()}
-                </Tr>
-                </Thead>
-                <Tbody>
-                {
-                    formatFundingRate(props.fundingData).map((row) => {
-                        return (
-                            <Tr>
-                                {row}
-                            </Tr>
-                        )
-                    })
-                }
-                </Tbody>
-                <Tfoot>
-                </Tfoot>
-            </Table>
-        </TableContainer>
-    )
 }
 
-export default TableComp
+class FundingTable extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            arrowState: {
+                "bybit": 0,
+                "kucoin": 0,
+                "coinex": 0,
+                "phemex": 0,
+            }
+        }
+    }
+
+    // const [arrowState, setArrowState] = useState()
+    
+    handleArrowClick(column) {
+        this.state.arrowState[column] = (this.state.arrowState[column] + 1) % 3
+    }
+
+    getExchangeRow() {
+        const exchanges = []
+        for (let exchange in exchangeColEnum) {
+            exchanges.push(
+                <Th className="column-title">
+                    {exchange}
+                    <button onClick={(e) => this.handleArrowClick(exchange)}>
+                        <ArrowUpDownIcon/>
+                    </button>
+                </Th>
+            )
+        }
+    
+        return exchanges
+    }
+    
+    render() {
+
+        return (
+            <TableContainer>
+                <Table variant='simple' size='lg' colorScheme="whiteAlpha">
+                    {/* <TableCaption placement="top">Funding Rates</TableCaption> */}
+                    <Thead>
+                    <Tr>
+                        <Th>Currency</Th>
+                        {this.getExchangeRow()}
+                    </Tr>
+                    </Thead>
+                    <Tbody>
+                    {
+                        formatFundingRate(this.props.fundingData).map((row) => {
+                            return (
+                                <Tr>
+                                    {row}
+                                </Tr>
+                            )
+                        })
+                    }
+                    </Tbody>
+                    <Tfoot>
+                    </Tfoot>
+                </Table>
+            </TableContainer>
+
+        )
+    }
+}
+
+export default FundingTable
