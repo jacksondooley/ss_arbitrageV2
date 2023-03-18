@@ -76,6 +76,7 @@ class FundingTable extends React.Component {
     
     handleArrowClick(column) {
         this.state.arrowState[column] = (this.state.arrowState[column] + 1) % 3
+        console.log(this.state)
     }
 
     getExchangeRow() {
