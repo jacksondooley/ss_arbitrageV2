@@ -42,7 +42,7 @@ def fetch_all_linear_markets():
 @app.route("/api/arbitrageOpportunities")
 def fetch_arbitrage_opportunities():
     arbitrageOpportunities = check_arbitrage_opportunities(
-
+        # aggreated_high_fr_linear_markets, aggregated_linear_markets
     )
     return {"arbitrageOpportunities": arbitrageOpportunities}
 

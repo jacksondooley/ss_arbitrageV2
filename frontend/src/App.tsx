@@ -36,20 +36,30 @@ function App() {
     })
   }
 
+  function fetchArbitrageOpportunities(): void {
+    fetch("/api/arbitrageOpportunities")
+    .then((res) => res.json())
+    .then((res) => console.log(res))
+  }
+
   React.useEffect(() => {
     fetchFundingRates();
     fetchHighFundingRates();
+    fetchArbitrageOpportunities();
   }, [])
   
   return (
     <div className="App">
-      <h1>SS Arbitrage</h1>
-      <div className="card">
+      <h1 className="title">
+        SS Arbitrage
+      </h1>
+      <div className="header">
         <Tabs>
           <TabList>
             <Tab>All Funding Rates</Tab>
             <Tab>Extreme Funding Rates</Tab>
             <Tab>Arbitrage</Tab>
+            <Tab>About</Tab>
           </TabList>
 
           <TabPanels>
@@ -58,6 +68,12 @@ function App() {
             </TabPanel>
             <TabPanel>
               <FundingTable fundingData={highFundingRateData}/>
+            </TabPanel>
+            <TabPanel>
+              Arbitrage
+            </TabPanel>
+            <TabPanel>
+              About
             </TabPanel>
           </TabPanels>
         </Tabs>
