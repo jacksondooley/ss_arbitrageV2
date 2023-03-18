@@ -20,6 +20,7 @@ active_exchanges = [
     # Phemex(),
 ]
 
+
 aggregated_linear_markets = utils.aggregate_markets(
     map(lambda exchange: exchange.all_linear_markets, active_exchanges)
 )
@@ -27,7 +28,6 @@ aggregated_linear_markets = utils.aggregate_markets(
 aggreated_high_fr_linear_markets = utils.aggregate_markets(
     map(lambda exchange: exchange.high_fr_linear_markets, active_exchanges)
 )
-
 
 @app.route("/api/fundingRates")
 def fetch_linear_markets():
@@ -42,7 +42,7 @@ def fetch_all_linear_markets():
 @app.route("/api/arbitrageOpportunities")
 def fetch_arbitrage_opportunities():
     arbitrageOpportunities = check_arbitrage_opportunities(
-        # aggreated_high_fr_linear_markets, aggregated_linear_markets
+        aggreated_high_fr_linear_markets, aggregated_linear_markets
     )
     return {"arbitrageOpportunities": arbitrageOpportunities}
 

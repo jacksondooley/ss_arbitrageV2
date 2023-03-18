@@ -1,4 +1,13 @@
 import coingecko
+import json
+
+def getBaseSymbolMap(markets):
+    baseSymbolMap = {}
+    for marketIdx, ele in enumerate(markets):
+        baseCurrency = markets[marketIdx][0]["baseCurrency"]
+        baseSymbolMap[baseCurrency] = marketIdx
+
+    return baseSymbolMap
 
 def sort_markets_by_market_cap(markets, market_cap_ranks):
     for market in markets:
@@ -29,18 +38,23 @@ def aggregate_markets(exchanges):
     return aggregated_markets
 
 def check_arbitrage_opportunities(high_fr_linear_markets, all_linear_markets):
-    message = ""
+    opportunities = []
+    baseSymbolMap = getBaseSymbolMap(all_linear_markets)
     for high_fr in high_fr_linear_markets:
+        high_fr = high_fr[0]
         baseCurrency = high_fr["baseCurrency"]
         high_fr_symbol = high_fr["symbol"]
-        for market in all_linear_markets[baseCurrency]:
+        for market in all_linear_markets[baseSymbolMap[baseCurrency]]:
             if high_fr_symbol != market["symbol"] and high_fr["exchange"] != market["exchange"]:
                 delta = high_fr["fundingRate"] - market["fundingRate"]
                 delta = round(delta, 4)
-                message += baseCurrency + "\n"
-                message += json.dumps(high_fr) + "\n"
-                message += json.dumps(market) + "\n"
-                message += str(delta) + "\n"
-                message += "--------------------"
+                opportunity = { 
+                    "baseCurrency": baseCurrency,
+                    "market1": high_fr,
+                    "market2": market,
+                    "delta": delta
+                }
 
-    return message
+                opportunities.append(opportunity)
+
+    return opportunities
