@@ -31,7 +31,6 @@ function formatFundingRate(markets: []) {
     const formatedTable = []
     for (let marketIdx in markets) {
         const market = markets[marketIdx]
-        console.log(market)
         const exhanges = Object.keys(market)
         const formattedRows = [
             <Td>{market[0].baseCurrency}</Td>,

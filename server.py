@@ -32,6 +32,7 @@ aggreated_high_fr_linear_markets = utils.aggregate_markets(
 @app.route("/api/fundingRates")
 def fetch_linear_markets():
     markets = aggregated_linear_markets
+    print(markets[0])
     return {"markets": markets}
 
 @app.route("/api/highFundingRates")
@@ -41,7 +42,7 @@ def fetch_all_linear_markets():
 
 @app.route("/api/arbitrageOpportunities")
 def fetch_arbitrage_opportunities():
-    arbitrageOpportunities = check_arbitrage_opportunities(
+    arbitrageOpportunities = utils.check_arbitrage_opportunities(
         aggreated_high_fr_linear_markets, aggregated_linear_markets
     )
     return {"arbitrageOpportunities": arbitrageOpportunities}
