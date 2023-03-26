@@ -94,8 +94,8 @@ function FundingTable() {
     const fundingData: [] = useOutletContext();
 
     return (
-        <TableContainer>
-            <Table variant='simple' size='lg' colorScheme="whiteAlpha">
+        <TableContainer className='table-container bg-light-bg-subtle'>
+            <Table variant='simple' size='lg' colorScheme="whiteAlpha" className='table bg-light'>
                 {/* <TableCaption placement="top">Funding Rates</TableCaption> */}
                 <Thead>
                 <Tr className='table-row'>

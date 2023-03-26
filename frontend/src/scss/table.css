@@ -17,3 +17,12 @@
     border-bottom-color: black;
     padding-bottom: 5px;
 }
+
+.table-container {
+    background-color: lightgray;
+    padding: 2rem;
+}
+
+.table {
+    background-color: white;
+}
