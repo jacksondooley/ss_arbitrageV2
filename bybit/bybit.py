@@ -27,18 +27,19 @@ class Bybit:
         linear_markets = {}
         for market in markets:
             baseCurrency, quoteCurrency = self.split_symbol(market["symbol"])
-            if baseCurrency not in linear_markets:
-                linear_markets[baseCurrency] = []
+            if baseCurrency != "err":                     
+                if baseCurrency not in linear_markets:
+                    linear_markets[baseCurrency] = []
 
-            fundingRate = float(market["fundingRate"]) * 100
-            fundingRate = round(fundingRate, 4)
-            linear_markets[baseCurrency].append({
-                "symbol": market["symbol"],
-                "exchange": "bybit",
-                "baseCurrency": baseCurrency,
-                "quoteCurrency": quoteCurrency,
-                "fundingRate": fundingRate
-            })
+                fundingRate = float(market["fundingRate"]) * 100
+                fundingRate = round(fundingRate, 4)
+                linear_markets[baseCurrency].append({
+                    "symbol": market["symbol"],
+                    "exchange": "bybit",
+                    "baseCurrency": baseCurrency,
+                    "quoteCurrency": quoteCurrency,
+                    "fundingRate": fundingRate
+                })
 
         return linear_markets
 
@@ -60,3 +61,5 @@ class Bybit:
             return symbol[:-4], "USDT"
         elif symbol[-4:] == "PERP":
             return symbol[:-4], "USDC"
+        else:
+            return "err", "err"

@@ -1,12 +1,14 @@
 import { useState } from 'react'
-import './App.css'
+import '../scss/App.css'
 import React from 'react'
 import FundingTable from './table'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { RepeatIcon } from '@chakra-ui/icons'
+import NavBar from './NavBar'
+import { Outlet, useLocation } from 'react-router-dom'
 
 
-function App() {
+function Root() {
   const [fundingRateData, setFundingRateData] = useState(null)
   const [highFundingRateData, setHighFundingRateData] = useState(null)
   
@@ -47,42 +49,25 @@ function App() {
     fetchHighFundingRates();
     fetchArbitrageOpportunities();
   }, [])
+
+  
+  function getContextData(): any {
+    const location = useLocation();
+    if (location.pathname === "/allFundingRates") {
+        return fundingRateData
+    }
+    else if (location.pathname === "/extremeFundingRates") {
+        return highFundingRateData
+    } 
+    return []
+  }
   
   return (
-    <div className="App">
-      <h1 className="title">
-        SS Arbitrage
-      </h1>
-      <div className="header">
-        <Tabs>
-          <TabList>
-            <Tab>All Funding Rates</Tab>
-            <Tab>Extreme Funding Rates</Tab>
-            <Tab>Arbitrage</Tab>
-            <Tab>About</Tab>
-          </TabList>
-
-          <TabPanels>
-            <TabPanel>
-              <FundingTable fundingData={fundingRateData}/>
-            </TabPanel>
-            <TabPanel>
-              <FundingTable fundingData={highFundingRateData}/>
-            </TabPanel>
-            <TabPanel>
-              Arbitrage
-            </TabPanel>
-            <TabPanel>
-              About
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-        <button onClick={fetchFundingRates}>
-          <RepeatIcon/>
-        </button>
-      </div>
+    <div>
+        <NavBar/>
+        <Outlet context={getContextData()}/>
     </div>
   )
 }
 
-export default App
+export default Root

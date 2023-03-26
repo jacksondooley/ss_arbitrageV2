@@ -13,19 +13,18 @@ import {
   import { useState } from 'react'
   import { ArrowUpDownIcon } from '@chakra-ui/icons'
 
-import "./table.css"
+import "../scss/table.css"
+import { useOutletContext } from 'react-router-dom'
+import { arrow } from '@popperjs/core'
 
 // starts at 1 due to currency being 0
+
 const exchangeColEnum = {
     "bybit": 1,
     "kucoin": 2,
     "coinex": 3,
     "phemex": 4,
 }
-
-
-
-
 
 function formatFundingRate(markets: []) {
     const formatedTable = []
@@ -58,33 +57,31 @@ function formatFundingRate(markets: []) {
     return formatedTable
 }
 
-class FundingTable extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            arrowState: {
-                "bybit": 0,
-                "kucoin": 0,
-                "coinex": 0,
-                "phemex": 0,
-            }
+function FundingTable() {
+
+    const [arrowState, setArrowState] = useState(
+        {
+            "bybit": 0,
+            "kucoin": 0,
+            "coinex": 0,
+            "phemex": 0,
         }
-    }
+    )
 
     // const [arrowState, setArrowState] = useState()
     
-    handleArrowClick(column) {
-        this.state.arrowState[column] = (this.state.arrowState[column] + 1) % 3
-        console.log(this.state)
+    function handleArrowClick(column: String) {
+        setArrowState[column] = (arrowState[column] + 1) % 3
+        console.log(arrow)
     }
 
-    getExchangeRow() {
+    function getExchangeRow() {
         const exchanges = []
         for (let exchange in exchangeColEnum) {
             exchanges.push(
                 <Th className="column-title">
                     {exchange}
-                    <button onClick={(e) => this.handleArrowClick(exchange)}>
+                    <button onClick={(e) => handleArrowClick(exchange)}>
                         <ArrowUpDownIcon/>
                     </button>
                 </Th>
@@ -94,36 +91,35 @@ class FundingTable extends React.Component {
         return exchanges
     }
     
-    render() {
+    const fundingData: [] = useOutletContext();
 
-        return (
-            <TableContainer>
-                <Table variant='simple' size='lg' colorScheme="whiteAlpha">
-                    {/* <TableCaption placement="top">Funding Rates</TableCaption> */}
-                    <Thead>
-                    <Tr>
-                        <Th>Currency</Th>
-                        {this.getExchangeRow()}
-                    </Tr>
-                    </Thead>
-                    <Tbody>
-                    {
-                        formatFundingRate(this.props.fundingData).map((row) => {
-                            return (
-                                <Tr>
-                                    {row}
-                                </Tr>
-                            )
-                        })
-                    }
-                    </Tbody>
-                    <Tfoot>
-                    </Tfoot>
-                </Table>
-            </TableContainer>
+    return (
+        <TableContainer>
+            <Table variant='simple' size='lg' colorScheme="whiteAlpha">
+                {/* <TableCaption placement="top">Funding Rates</TableCaption> */}
+                <Thead>
+                <Tr className='table-row'>
+                    <Th>Currency</Th>
+                    {getExchangeRow()}
+                </Tr>
+                </Thead>
+                <Tbody>
+                {
+                    formatFundingRate(fundingData).map((row) => {
+                        return (
+                            <Tr>
+                                {row}
+                            </Tr>
+                        )
+                    })
+                }
+                </Tbody>
+                <Tfoot>
+                </Tfoot>
+            </Table>
+        </TableContainer>
 
-        )
-    }
+    )
 }
 
 export default FundingTable

@@ -20,7 +20,6 @@ active_exchanges = [
     # Phemex(),
 ]
 
-
 aggregated_linear_markets = utils.aggregate_markets(
     map(lambda exchange: exchange.all_linear_markets, active_exchanges)
 )
