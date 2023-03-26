@@ -9,7 +9,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import FundingTable from './table'
+import FundingTable from './Table'
 
 const router = createBrowserRouter([
   {
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: "arbitrage",
-        element: <FundingTable />
+        element: <div>Coming Soon</div>
       },
     ],
   },

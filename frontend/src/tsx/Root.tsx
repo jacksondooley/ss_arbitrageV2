@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import '../scss/App.css'
 import React from 'react'
-import FundingTable from './table'
+import FundingTable from './Table'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { RepeatIcon } from '@chakra-ui/icons'
 import NavBar from './NavBar'
