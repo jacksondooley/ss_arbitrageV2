@@ -32,12 +32,17 @@ function formatFundingRate(markets: []) {
         const market = markets[marketIdx]
         const exhanges = Object.keys(market)
         const formattedRows = [
-            <Td>{market[0].baseCurrency}</Td>,
+        <Td>{market[0].baseCurrency}</Td>,
         <Td>-</Td>,
         <Td>-</Td>,
         <Td>-</Td>,
         <Td>-</Td>
-    ]
+        ]
+        if ("image" in Object.keys(market[0])) {
+            formattedRows[0] = <Td>
+                {market[0].image}
+            </Td>
+        }
       for (let exchange in exhanges) {
           const b = market[exchange]
           let fr = b.fundingRate
@@ -79,12 +84,12 @@ function FundingTable() {
         const exchanges = []
         for (let exchange in exchangeColEnum) {
             exchanges.push(
-                <Th className="column-title">
+                <Td className="column-title">
                     {exchange}
                     <button onClick={(e) => handleArrowClick(exchange)}>
                         <ArrowUpDownIcon/>
                     </button>
-                </Th>
+                </Td>
             )
         }
     
@@ -97,18 +102,18 @@ function FundingTable() {
         <TableContainer className='table-container bg-light-bg-subtle'>
             <Table variant='simple' size='lg' colorScheme="whiteAlpha" className='table bg-light'>
                 {/* <TableCaption placement="top">Funding Rates</TableCaption> */}
-                <Thead>
-                <Tr className='table-row'>
-                    <Th>Currency</Th>
-                    {getExchangeRow()}
-                </Tr>
+                <Thead className="">
+                    <Tr>
+                        <Th>Currency</Th>
+                        {getExchangeRow()}
+                    </Tr>
                 </Thead>
                 <Tbody>
                 {
                     formatFundingRate(fundingData).map((row) => {
                         return (
-                            <Tr>
-                                {row}
+                            <Tr border='100px' borderColor='black'>
+                                    {row}
                             </Tr>
                         )
                     })

@@ -12,7 +12,8 @@ def getBaseSymbolMap(markets):
 def sort_markets_by_market_cap(markets, market_cap_ranks):
     for market in markets:
         if market.lower() in market_cap_ranks:
-            markets[market][0]['rank'] = market_cap_ranks[market.lower()]
+            markets[market][0]['rank'] = market_cap_ranks[market.lower()]["rank"]
+            markets[market][0]['image'] = market_cap_ranks[market.lower()]["image"]
         else:
             markets[market][0]['rank'] = 1000 # high value for markets  missing market cap rankings
 

@@ -17,8 +17,14 @@ def fetch_markets():
 def fetch_market_cap_rankings(markets):
     # market_cap_rankings = []
     market_cap_rankings = {}
-    for market in markets:
-        market_cap_rankings[market['symbol'].lower()] = market['market_cap_rank']
+    for market in markets[0:10]:
+        print(market)
+        market_cap_rankings[market['symbol'].lower()] = {
+            "rank": market['market_cap_rank'],
+            "image": market["image"]
+        }
         # market_cap_rankings.push(market)
+
+    print(market_cap_rankings)
 
     return market_cap_rankings

@@ -12,15 +12,12 @@
 }
 
 .table-row {
-    border-bottom: 1px;
-    border-color: black;
-    border-bottom-color: black;
-    padding-bottom: 5px;
+    border-top: 1px solid lightgray;
 }
 
 .table-container {
     background-color: lightgray;
-    padding: 2rem;
+    padding: 2vw;
 }
 
 .table {
