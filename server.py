@@ -16,8 +16,8 @@ app = Flask(__name__)
 active_exchanges = [
     Bybit(),
     Kucoin(),
-    Coinex(),
-    Phemex(),
+    # Coinex(),
+    # Phemex(),
 ]
 
 aggregated_linear_markets = utils.aggregate_markets(

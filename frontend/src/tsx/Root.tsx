@@ -6,37 +6,12 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { RepeatIcon } from '@chakra-ui/icons'
 import NavBar from './NavBar'
 import { Outlet, useLocation, useOutletContext } from 'react-router-dom'
+import { fetchFundingRates, fetchHighFundingRates } from '../apiUtils'
 
 
 function Root() {
   const [fundingRateData, setFundingRateData] = useState(null)
   const [highFundingRateData, setHighFundingRateData] = useState(null)
-  
-  function fetchFundingRates(): void {
-    fetch("/api/fundingRates")
-    .then((res) => res.json())
-    .then((res) => {
-      const markets = {}
-      for (let marketIdx in res.markets) {
-        const market = res.markets[marketIdx]
-        markets[market[0].baseCurrency] = market
-      }
-      setFundingRateData(markets)
-    })
-  }
-
-  function fetchHighFundingRates(): void {
-    fetch("/api/highFundingRates")
-    .then((res) => res.json())
-    .then((res) => {
-      const markets = {}
-      for (let marketIdx in res.markets) {
-        const market = res.markets[marketIdx]
-        markets[market[0].baseCurrency] = market
-      }
-      setHighFundingRateData(markets)
-    })
-  }
 
   function fetchArbitrageOpportunities(): void {
     fetch("/api/arbitrageOpportunities")
@@ -45,8 +20,8 @@ function Root() {
   }
 
   React.useEffect(() => {
-    fetchFundingRates();
-    fetchHighFundingRates();
+    setFundingRateData(fetchFundingRates());
+    setHighFundingRateData(fetchHighFundingRates());
     fetchArbitrageOpportunities();
   }, [])
 
