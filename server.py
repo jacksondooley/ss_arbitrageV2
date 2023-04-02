@@ -8,6 +8,7 @@ from bybit.bybit import Bybit
 from kucoin.kucoin import Kucoin
 from phemex.phemex import Phemex
 from coinex.coinex import Coinex
+from bitget.bitget import BitGet
 # from hermes import send_message
 
 
@@ -18,6 +19,7 @@ active_exchanges = [
     Kucoin(),
     # Coinex(),
     # Phemex(),
+    # BitGet(),
 ]
 
 aggregated_linear_markets = utils.aggregate_markets(
@@ -98,3 +100,5 @@ def fetch_arbitrage_opportunities():
 
 
     # phemex.performance_test()
+
+BitGet()
