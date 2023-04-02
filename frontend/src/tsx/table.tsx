@@ -83,10 +83,6 @@ function FundingTable() {
             "phemex": 0,
         }
     )
-
-        
-
-
     
     function handleArrowClick(column: keyof ArrowState) {
         setArrowState(prevState => {
@@ -118,21 +114,21 @@ function FundingTable() {
         return exchanges
     }
 
-    const [fundingData, setFundingData] = useState([])
-
     const location = useLocation()
     React.useEffect(() => {
         console.log(location.pathname)
         if (location.pathname === "/allFundingRates") {
-            setFundingData([])
+            // setFundingData([])
         }
         else if (location.pathname === "/extremeFundingRates") {
-            setFundingData([])
+            // setFundingData([])
         }
         else { 
-            setFundingData([])
+            // setFundingData([])
         }
     }, [location])
+
+    const [fundingData, setFundingData] = useState(useOutletContext());
 
 
     return (

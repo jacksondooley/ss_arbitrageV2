@@ -10,8 +10,8 @@ import { fetchFundingRates, fetchHighFundingRates } from '../apiUtils'
 
 
 function Root() {
-  const [fundingRateData, setFundingRateData] = useState(null)
-  const [highFundingRateData, setHighFundingRateData] = useState(null)
+  const [fundingRateData, setFundingRateData] = useState<any>(null)
+  const [highFundingRateData, setHighFundingRateData] = useState<any>(null)
 
   function fetchArbitrageOpportunities(): void {
     fetch("/api/arbitrageOpportunities")
@@ -20,15 +20,20 @@ function Root() {
   }
 
   React.useEffect(() => {
-    setFundingRateData(fetchFundingRates());
-    setHighFundingRateData(fetchHighFundingRates());
+    async function fetchData() {
+      const fundingRates = await fetchFundingRates();
+      setFundingRateData(fundingRates);
+      const highFundingRates = await fetchHighFundingRates();
+      setHighFundingRateData(highFundingRates)
+    }
+
+    fetchData()
     fetchArbitrageOpportunities();
   }, [])
 
   
   function getContextData(): any {
     const location = useLocation();
-    console.log(location)
     if (location.pathname === "/allFundingRates") {
         return fundingRateData
     }

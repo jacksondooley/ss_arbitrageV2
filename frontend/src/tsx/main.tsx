@@ -10,6 +10,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import FundingTable from './table'
+import Settings from "./settings"
 
 const router = createBrowserRouter([
   {
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
       },
       {
         path: "settings",
-        element: <div>settings</div>
+        element: <Settings />
       }
     ],
   },
