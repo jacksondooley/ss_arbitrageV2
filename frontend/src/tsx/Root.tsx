@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { createContext, useState } from 'react'
 import '../scss/App.css'
 import React from 'react'
 import FundingTable from './Table'
@@ -7,6 +7,8 @@ import { RepeatIcon } from '@chakra-ui/icons'
 import NavBar from './NavBar'
 import { Outlet, useLocation, useOutletContext } from 'react-router-dom'
 import { fetchFundingRates, fetchHighFundingRates } from '../apiUtils'
+
+export const SettingsContext = createContext(null)
 
 
 function Root() {
@@ -43,10 +45,19 @@ function Root() {
     return []
   }
   
+  const [settings, setSettings] = useState({
+    bybit: true,
+    kucoin: true,
+    coinex: true,
+    phemex: true,
+  });
+
   return (
     <div>
         <NavBar/>
-        <Outlet context={getContextData()}/>
+        <SettingsContext.Provider value={{settings, setSettings}}>
+          <Outlet />
+        </SettingsContext.Provider>
     </div>
   )
 }

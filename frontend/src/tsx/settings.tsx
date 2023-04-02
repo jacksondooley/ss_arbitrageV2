@@ -1,17 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Checkbox, CheckboxGroup } from '@chakra-ui/react'
 import { useState } from "react"
-
+import { useOutletContext } from "react-router-dom"
+import { SettingsContext } from "./Root"
 function settings() {
 
-    const [exchanges, setExchanges] = useState({
-        bybit: true,
-        kucoin: true,
-      });
+    const {settings, setSettings } = useContext(SettingsContext);
       
     function handleCheck(exchange) {
         console.log(`handleCheck called ${exchange}`)
-        setExchanges(prevState => {
+        setSettings(prevState => {
           const checked = !prevState[exchange];
           return {
             ...prevState,
@@ -19,7 +17,7 @@ function settings() {
           };
         });
     }
-
+    console.log(settings)
     return (
         <div>
             <div>
@@ -27,7 +25,7 @@ function settings() {
             </div>
             <div>
                 <ul>
-                    {Object.keys(exchanges).map((exchange) => {
+                    {Object.keys(settings).map((exchange) => {
                         return (
                             <li>
                                 <div>
@@ -35,7 +33,7 @@ function settings() {
                                 </div>
                                 <div>
                                     <Checkbox 
-                                    isChecked={exchanges[exchange]}
+                                    isChecked={settings[exchange]}
                                     onChange={()=>handleCheck(exchange)}
                                     />
                                 </div>

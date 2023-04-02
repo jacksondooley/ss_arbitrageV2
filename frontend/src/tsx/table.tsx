@@ -9,12 +9,13 @@ import {
     TableCaption,
     TableContainer,
   } from '@chakra-ui/react'
-  import React from 'react'
+  import React, { useContext } from 'react'
   import { useState } from 'react'
   import { ArrowUpDownIcon } from '@chakra-ui/icons'
 import "../scss/table.css"
 import { useOutletContext, useLocation } from 'react-router-dom'
 import { arrow } from '@popperjs/core'
+import { SettingsContext } from './Root'
 
 // starts at 1 due to currency being 0
 
@@ -94,21 +95,25 @@ function FundingTable() {
         
     }
 
+    const { settings, setSettings} = useContext(SettingsContext)
+
     function getExchangeRow() {
         const exchanges = []
         for (let exchange in exchangeColEnum) {
-            exchanges.push(
-                <Td className="column-title">
-                    {exchange}
-                    {/* <button > */}
-                        <ArrowUpDownIcon
-                            className="arrow"
-                            onClick={() => handleArrowClick(exchange)}
-                            style={{ color: arrowColor[arrowState[exchange]]}}
-                        />
-                    {/* </button> */}
-                </Td>
-            )
+            if (settings[exchange]) {
+                exchanges.push(
+                    <Td className="column-title">
+                        {exchange}
+                        {/* <button > */}
+                            <ArrowUpDownIcon
+                                className="arrow"
+                                onClick={() => handleArrowClick(exchange)}
+                                style={{ color: arrowColor[arrowState[exchange]]}}
+                            />
+                        {/* </button> */}
+                    </Td>
+                )
+            }
         }
     
         return exchanges
@@ -146,7 +151,7 @@ function FundingTable() {
                     formatFundingRate(fundingData).map((row) => {
                         return (
                             <Tr>
-                                    {row}
+                                {row}
                             </Tr>
                         )
                     })
