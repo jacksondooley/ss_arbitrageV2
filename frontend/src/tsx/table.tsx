@@ -19,11 +19,24 @@ import { arrow } from '@popperjs/core'
 
 // starts at 1 due to currency being 0
 
+interface ArrowState {
+    "bybit": number,
+    "kucoin": number,
+    "coinex": number,
+    "phemex": number,
+}
+
 const exchangeColEnum = {
     "bybit": 1,
     "kucoin": 2,
     "coinex": 3,
     "phemex": 4,
+}
+
+const arrowColor = {
+    // 0: "none",
+    1: "green",
+    2: "red"
 }
 
 function formatFundingRate(markets: []) {
@@ -63,8 +76,7 @@ function formatFundingRate(markets: []) {
 }
 
 function FundingTable() {
-
-    const [arrowState, setArrowState] = useState(
+    const [arrowState, setArrowState] = useState<ArrowState>(
         {
             "bybit": 0,
             "kucoin": 0,
@@ -72,12 +84,15 @@ function FundingTable() {
             "phemex": 0,
         }
     )
-
-    // const [arrowState, setArrowState] = useState()
     
-    function handleArrowClick(column: String) {
-        setArrowState[column] = (arrowState[column] + 1) % 3
-        console.log(arrow)
+    function handleArrowClick(column: keyof ArrowState) {
+        setArrowState(prevState => {
+            return {
+                ...prevState,
+                ...{[`${column}`]: (prevState[column] + 1) % 3}
+            }
+        })
+        console.log(column)
     }
 
     function getExchangeRow() {
@@ -86,9 +101,13 @@ function FundingTable() {
             exchanges.push(
                 <Td className="column-title">
                     {exchange}
-                    <button onClick={(e) => handleArrowClick(exchange)}>
-                        <ArrowUpDownIcon/>
-                    </button>
+                    {/* <button > */}
+                        <ArrowUpDownIcon
+                            className="arrow"
+                            onClick={() => handleArrowClick(exchange)}
+                            style={{ color: arrowColor[arrowState[exchange]]}}
+                        />
+                    {/* </button> */}
                 </Td>
             )
         }
@@ -123,7 +142,6 @@ function FundingTable() {
                 </Tfoot>
             </Table>
         </TableContainer>
-
     )
 }
 
