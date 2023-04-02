@@ -5,7 +5,7 @@ import FundingTable from './Table'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { RepeatIcon } from '@chakra-ui/icons'
 import NavBar from './NavBar'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, useOutletContext } from 'react-router-dom'
 
 
 function Root() {
@@ -53,6 +53,7 @@ function Root() {
   
   function getContextData(): any {
     const location = useLocation();
+    console.log(location)
     if (location.pathname === "/allFundingRates") {
         return fundingRateData
     }

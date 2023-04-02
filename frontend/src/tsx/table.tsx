@@ -12,7 +12,6 @@ import {
   import React from 'react'
   import { useState } from 'react'
   import { ArrowUpDownIcon } from '@chakra-ui/icons'
-
 import "../scss/table.css"
 import { useOutletContext } from 'react-router-dom'
 import { arrow } from '@popperjs/core'
@@ -84,6 +83,10 @@ function FundingTable() {
             "phemex": 0,
         }
     )
+
+        
+
+    const [fundingData, setFundingData] = useState(useOutletContext())
     
     function handleArrowClick(column: keyof ArrowState) {
         setArrowState(prevState => {
@@ -92,7 +95,7 @@ function FundingTable() {
                 ...{[`${column}`]: (prevState[column] + 1) % 3}
             }
         })
-        console.log(column)
+        
     }
 
     function getExchangeRow() {
@@ -115,7 +118,12 @@ function FundingTable() {
         return exchanges
     }
     
-    const fundingData: [] = useOutletContext();
+    // React.useEffect(() => {
+    //     setFundingData(1)
+        
+    // }, [])
+    // const fundingData: [] = useOutletContext();
+
 
     return (
         <TableContainer className='table-container bg-light-bg-subtle'>
@@ -131,7 +139,7 @@ function FundingTable() {
                 {
                     formatFundingRate(fundingData).map((row) => {
                         return (
-                            <Tr border='100px' borderColor='black'>
+                            <Tr>
                                     {row}
                             </Tr>
                         )
