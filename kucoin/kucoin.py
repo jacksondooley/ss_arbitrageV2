@@ -5,6 +5,7 @@ class Kucoin:
         self.url = "https://api-futures.kucoin.com"
         self.all_linear_markets = []
         self.high_fr_linear_markets = []
+        self.name = "KuCoin"
         
         self.fetch_linear_markets()
 

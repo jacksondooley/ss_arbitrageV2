@@ -7,6 +7,7 @@ class Coinex:
         self.url = "https://api.coinex.com"
         self.all_linear_markets = []
         self.high_fr_linear_markets = []
+        self.name = "Coinex"
 
         asyncio.run(self.fetch_linear_markets())
 

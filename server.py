@@ -48,6 +48,14 @@ def fetch_arbitrage_opportunities():
     )
     return {"arbitrageOpportunities": arbitrageOpportunities}
 
+@app.route("/api/activeExchanges")
+def fetch_active_exchanges():
+    exchanges = []
+    for exchange in active_exchanges:
+        exchanges.push(exchange.name)
+    
+    return {"exchanges": exchanges}
+
 
 # def structure_funding_message(fundingRates: [], exchangeName: str) -> str:
 #     message = f"---------{exchangeName} Funding Rates---------\n"

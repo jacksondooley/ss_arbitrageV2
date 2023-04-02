@@ -7,6 +7,7 @@ class BitGet:
         self.url = CONSTANTS.REST_URL
         self.all_linear_markets = []
         self.high_fr_linear_marekts = []
+        self.name = "BitGet"
 
         self.fetch_linear_markets()
 

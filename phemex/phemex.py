@@ -9,6 +9,7 @@ class Phemex:
         self.url = "https://api.phemex.com"
         self.all_linear_markets = []
         self.high_fr_linear_markets = []
+        self.name = "Phemex"
 
         asyncio.run(self.fetch_linear_markets())
 
