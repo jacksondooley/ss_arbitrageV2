@@ -15,7 +15,8 @@ import {
 import "../scss/table.css"
 import { useOutletContext, useLocation } from 'react-router-dom'
 import { arrow } from '@popperjs/core'
-import { SettingsContext } from './Root'
+import { DataContext, SettingsContext } from './Root'
+import settings from './settings'
 
 // starts at 1 due to currency being 0
 
@@ -40,42 +41,57 @@ const arrowColor = {
 }
 
 function formatFundingRate(markets: []) {
+    const { settings, setSettings} = useContext(SettingsContext)
+    
     const formatedTable = []
     for (let marketIdx in markets) {
         const market = markets[marketIdx]
         const exhanges = Object.keys(market)
         const formattedRows = [
         <Td>{market[0].baseCurrency}</Td>,
-        <Td>-</Td>,
-        <Td>-</Td>,
-        <Td>-</Td>,
-        <Td>-</Td>
-        ]
-        if ("image" in Object.keys(market[0])) {
+    ]
+    for (let exchange in settings) {
+        console.log(exchange)
+        if (settings[exchange]) {
+            formattedRows.push(<Td>-</Td>)
+        }
+    }
+    if ("image" in Object.keys(market[0])) {
             formattedRows[0] = <Td>
                 {market[0].image}
             </Td>
         }
-      for (let exchange in exhanges) {
-          const b = market[exchange]
-          let fr = b.fundingRate
-          if (fr > 0.01) {
-            formattedRows[exchangeColEnum[b.exchange]] = <Td className="neg">{fr}</Td>
-        }
-        else if (fr < 0.01) {
-            formattedRows[exchangeColEnum[b.exchange]] = <Td className="pos">{fr}</Td>
-        }
-        else {
-            formattedRows[exchangeColEnum[b.exchange]] = <Td className="neu">{fr}</Td>
-        }
+        for (let exchange in exhanges) {
+            const b = market[exchange]
+            if (settings[b.exchange]) {
+                let fr = b.fundingRate
+                if (fr > 0.01) {
+                  formattedRows[exchangeColEnum[b.exchange]] = <Td className="neg">{fr}</Td>
+                }
+                else if (fr < 0.01) {
+                    formattedRows[exchangeColEnum[b.exchange]] = <Td className="pos">{fr}</Td>
+                }
+                else {
+                formattedRows[exchangeColEnum[b.exchange]] = <Td className="neu">{fr}</Td>
+                }
+            }
       }
       formatedTable.push(formattedRows)
     }
-  
+    
     return formatedTable
 }
 
 function FundingTable() {
+    const { settings, setSettings} = useContext(SettingsContext)
+    const {
+        fundingRateData, 
+        setFundingRateData, 
+        highFundingRateData, 
+        setHighFundingRateData
+    } = useContext(DataContext)
+
+
     const [arrowState, setArrowState] = useState<ArrowState>(
         {
             "bybit": 0,
@@ -83,9 +99,9 @@ function FundingTable() {
             "coinex": 0,
             "phemex": 0,
         }
-    )
-    
-    function handleArrowClick(column: keyof ArrowState) {
+        )
+        
+        function handleArrowClick(column: keyof ArrowState) {
         setArrowState(prevState => {
             return {
                 ...prevState,
@@ -95,7 +111,6 @@ function FundingTable() {
         
     }
 
-    const { settings, setSettings} = useContext(SettingsContext)
 
     function getExchangeRow() {
         const exchanges = []
@@ -120,20 +135,16 @@ function FundingTable() {
     }
 
     const location = useLocation()
+    const [fundingData, setFundingData] = useState([])
     React.useEffect(() => {
         console.log(location.pathname)
         if (location.pathname === "/allFundingRates") {
-            // setFundingData([])
+            setFundingData(fundingRateData)
         }
         else if (location.pathname === "/extremeFundingRates") {
-            // setFundingData([])
-        }
-        else { 
-            // setFundingData([])
+            setFundingData(highFundingRateData)
         }
     }, [location])
-
-    const [fundingData, setFundingData] = useState(useOutletContext());
 
 
     return (

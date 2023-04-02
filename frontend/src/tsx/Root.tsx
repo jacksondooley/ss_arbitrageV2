@@ -9,6 +9,7 @@ import { Outlet, useLocation, useOutletContext } from 'react-router-dom'
 import { fetchFundingRates, fetchHighFundingRates } from '../apiUtils'
 
 export const SettingsContext = createContext(null)
+export const DataContext = createContext(null)
 
 
 function Root() {
@@ -56,7 +57,9 @@ function Root() {
     <div>
         <NavBar/>
         <SettingsContext.Provider value={{settings, setSettings}}>
-          <Outlet />
+          <DataContext.Provider value={{fundingRateData, setFundingRateData, highFundingRateData, setHighFundingRateData}}>
+            <Outlet />
+          </DataContext.Provider>
         </SettingsContext.Provider>
     </div>
   )
