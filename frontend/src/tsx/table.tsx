@@ -13,7 +13,7 @@ import {
   import { useState } from 'react'
   import { ArrowUpDownIcon } from '@chakra-ui/icons'
 import "../scss/table.css"
-import { useOutletContext } from 'react-router-dom'
+import { useOutletContext, useLocation } from 'react-router-dom'
 import { arrow } from '@popperjs/core'
 
 // starts at 1 due to currency being 0
@@ -86,7 +86,7 @@ function FundingTable() {
 
         
 
-    const [fundingData, setFundingData] = useState(useOutletContext())
+
     
     function handleArrowClick(column: keyof ArrowState) {
         setArrowState(prevState => {
@@ -117,12 +117,22 @@ function FundingTable() {
     
         return exchanges
     }
-    
-    // React.useEffect(() => {
-    //     setFundingData(1)
-        
-    // }, [])
-    // const fundingData: [] = useOutletContext();
+
+    const [fundingData, setFundingData] = useState([])
+
+    const location = useLocation()
+    React.useEffect(() => {
+        console.log(location.pathname)
+        if (location.pathname === "/allFundingRates") {
+            setFundingData([])
+        }
+        else if (location.pathname === "/extremeFundingRates") {
+            setFundingData([])
+        }
+        else { 
+            setFundingData([])
+        }
+    }, [location])
 
 
     return (
