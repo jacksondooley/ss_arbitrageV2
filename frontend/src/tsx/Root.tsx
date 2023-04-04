@@ -6,7 +6,7 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { RepeatIcon } from '@chakra-ui/icons'
 import NavBar from './NavBar'
 import { Outlet, useLocation, useOutletContext } from 'react-router-dom'
-import { fetchFundingRates, fetchHighFundingRates } from '../apiUtils'
+import { fetchEnabledExchanges, fetchFundingRates, fetchHighFundingRates } from '../apiUtils'
 
 export const SettingsContext = createContext(null)
 export const DataContext = createContext(null)
@@ -15,6 +15,7 @@ export const DataContext = createContext(null)
 function Root() {
   const [fundingRateData, setFundingRateData] = useState<any>(null)
   const [highFundingRateData, setHighFundingRateData] = useState<any>(null)
+  const [exchanges, setExchanges] = useState<any>(null)
 
   function fetchArbitrageOpportunities(): void {
     fetch("/api/arbitrageOpportunities")
@@ -28,6 +29,8 @@ function Root() {
       setFundingRateData(fundingRates);
       const highFundingRates = await fetchHighFundingRates();
       setHighFundingRateData(highFundingRates)
+      const exchanges = await fetchEnabledExchanges();
+      setExchanges(exchanges)
     }
 
     fetchData()
@@ -45,7 +48,7 @@ function Root() {
     } 
     return []
   }
-  
+
   const [settings, setSettings] = useState({
     bybit: true,
     kucoin: true,
@@ -57,7 +60,14 @@ function Root() {
     <div>
         <NavBar/>
         <SettingsContext.Provider value={{settings, setSettings}}>
-          <DataContext.Provider value={{fundingRateData, setFundingRateData, highFundingRateData, setHighFundingRateData}}>
+          <DataContext.Provider value={
+            {
+              fundingRateData, 
+              setFundingRateData, 
+              highFundingRateData, 
+              setHighFundingRateData,
+              exchanges
+            }}>
             <Outlet />
           </DataContext.Provider>
         </SettingsContext.Provider>

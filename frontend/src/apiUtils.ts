@@ -32,3 +32,13 @@ export async function fetchHighFundingRates(): Promise<any> {
     }
     return markets;
 }
+
+export async function fetchEnabledExchanges(): Promise<any> {
+    const exchanges = []
+    const response = await fetch("/api/activeExchanges")
+    const res = await response.json();
+    for (let exchange in res.exchanges){
+        exchanges.push(exchange)
+    }
+    return exchanges;
+}

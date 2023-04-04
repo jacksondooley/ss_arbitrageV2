@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Checkbox, CheckboxGroup } from '@chakra-ui/react'
 import { useState } from "react"
 import { useOutletContext } from "react-router-dom"
-import { SettingsContext } from "./Root"
+import { DataContext, SettingsContext } from "./Root"
 function settings() {
 
     const {settings, setSettings } = useContext(SettingsContext);
