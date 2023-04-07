@@ -4,13 +4,13 @@ import Root from './Root'
 import '../scss/index.css'
 import { ChakraProvider } from '@chakra-ui/react'
 import '../scss/styles.scss'
-import * as bootstrap from 'bootstrap'
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 import FundingTable from './table'
 import Settings from "./settings"
+import Sheet from './dataGrid'
 
 const router = createBrowserRouter([
   {
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
       },
       {
         path: "arbitrage",
-        element: <div>Coming Soon</div>
+        element: <Sheet/>
       },
       {
         path: "about",
@@ -43,8 +43,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <ChakraProvider>
-      <RouterProvider router={router} />
-    </ChakraProvider>
+    <RouterProvider router={router} />
   </React.StrictMode>,
 )

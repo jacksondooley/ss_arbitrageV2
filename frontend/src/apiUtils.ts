@@ -6,6 +6,7 @@ export async function fetchFundingRates(): Promise<any> {
         const market = res.markets[marketIdx];
         markets[market[0].baseCurrency] = market;
     }
+    console.log(markets)
     return markets;
 }
 

@@ -1,9 +1,6 @@
 import { createContext, useState } from 'react'
 import '../scss/App.css'
 import React from 'react'
-import FundingTable from './Table'
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
-import { RepeatIcon } from '@chakra-ui/icons'
 import NavBar from './NavBar'
 import { Outlet, useLocation, useOutletContext } from 'react-router-dom'
 import { fetchEnabledExchanges, fetchFundingRates, fetchHighFundingRates } from '../apiUtils'
@@ -13,7 +10,7 @@ export const DataContext = createContext(null)
 
 
 function Root() {
-  const [fundingRateData, setFundingRateData] = useState<any>(null)
+  const [fundingRateData, setFundingRateData] = useState<any>([])
   const [highFundingRateData, setHighFundingRateData] = useState<any>(null)
   const [exchanges, setExchanges] = useState<any>(null)
 
@@ -49,12 +46,12 @@ function Root() {
     return []
   }
 
-  const [settings, setSettings] = useState({
-    bybit: true,
-    kucoin: true,
-    coinex: true,
-    phemex: true,
-  });
+  const [settings, setSettings] = useState([
+    {exchangeName: 'bybit', enabled: true},
+    {exchangeName: 'kucoin', enabled: true},
+    {exchangeName: 'coinex', enabled: true},
+    {exchangeName: 'phemex', enabled: true},
+  ]);
 
   return (
     <div>

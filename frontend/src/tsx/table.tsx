@@ -91,7 +91,6 @@ function FundingTable() {
         setHighFundingRateData
     } = useContext(DataContext)
 
-
     const [arrowState, setArrowState] = useState<ArrowState>(
         {
             "bybit": 0,
