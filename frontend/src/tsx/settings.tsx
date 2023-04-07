@@ -4,23 +4,20 @@ import { useState } from "react"
 import { useOutletContext } from "react-router-dom"
 import { DataContext, SettingsContext } from "./Root"
 function settings() {
-
     const {settings, setSettings } = useContext(SettingsContext);
       
     function handleCheck(exchange) {
-        console.log(`handleCheck called ${exchange}`)
         setSettings(prevState => {
-          const checked = !exchange.enabled;
           return prevState.map((prevExch) => {
             if (prevExch.exchangeName != exchange.exchangeName) {
                 return prevExch
             } else {
-                return {exchangeName: exchange.exchangeName, enabled: checked}
+                return {exchangeName: exchange.exchangeName, enabled: !exchange.enabled}
             }
           })
         });
     }
-    console.log(settings)
+
     return (
         <div>
             <div>

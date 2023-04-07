@@ -3,7 +3,7 @@ import '../scss/App.css'
 import React from 'react'
 import NavBar from './NavBar'
 import { Outlet, useLocation, useOutletContext } from 'react-router-dom'
-import { fetchEnabledExchanges, fetchFundingRates, fetchHighFundingRates } from '../apiUtils'
+import { fetchArbitrageOpportunities, fetchEnabledExchanges, fetchFundingRates, fetchHighFundingRates } from '../apiUtils'
 
 export const SettingsContext = createContext(null)
 export const DataContext = createContext(null)
@@ -11,14 +11,9 @@ export const DataContext = createContext(null)
 
 function Root() {
   const [fundingRateData, setFundingRateData] = useState<any>([])
-  const [highFundingRateData, setHighFundingRateData] = useState<any>(null)
+  const [highFundingRateData, setHighFundingRateData] = useState<any>([])
   const [exchanges, setExchanges] = useState<any>(null)
-
-  function fetchArbitrageOpportunities(): void {
-    fetch("/api/arbitrageOpportunities")
-    .then((res) => res.json())
-    .then((res) => console.log(res))
-  }
+  const [arbs, setArbs] = useState<any>([])
 
   React.useEffect(() => {
     async function fetchData() {
@@ -26,8 +21,10 @@ function Root() {
       setFundingRateData(fundingRates);
       const highFundingRates = await fetchHighFundingRates();
       setHighFundingRateData(highFundingRates)
-      const exchanges = await fetchEnabledExchanges();
-      setExchanges(exchanges)
+      // const exchanges = await fetchEnabledExchanges();
+      // setExchanges(exchanges)
+      const arbs = await fetchArbitrageOpportunities();
+      setArbs(arbs);
     }
 
     fetchData()
@@ -63,7 +60,8 @@ function Root() {
               setFundingRateData, 
               highFundingRateData, 
               setHighFundingRateData,
-              exchanges
+              exchanges,
+              arbs
             }}>
             <Outlet />
           </DataContext.Provider>

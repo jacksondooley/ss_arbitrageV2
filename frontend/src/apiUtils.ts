@@ -34,6 +34,12 @@ export async function fetchHighFundingRates(): Promise<any> {
     return markets;
 }
 
+export async function fetchArbitrageOpportunities(): Promise<any> {
+    const response = await fetch("/api/arbitrageOpportunities")
+    const res = await response.json();
+    return res.arbitrageOpportunities
+}
+
 export async function fetchEnabledExchanges(): Promise<any> {
     const exchanges = []
     const response = await fetch("/api/activeExchanges")

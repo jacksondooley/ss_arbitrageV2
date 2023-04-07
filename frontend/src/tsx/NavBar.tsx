@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Sheet from './dataGrid'
+import Sheet from './fundingTable'
 
 function NavBar() {
 

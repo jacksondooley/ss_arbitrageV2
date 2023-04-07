@@ -1,7 +1,8 @@
 import { DataGrid, GridRowsProp, GridColDef, GridCellParams } from '@mui/x-data-grid';
 import { DataContext, SettingsContext } from './Root'
-import { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Box } from '@mui/material';
+import { useOutletContext, useLocation } from 'react-router-dom'
 
 function populateRows(data: {}): GridRowsProp {
   const rows: GridRowsProp = [];
@@ -38,19 +39,29 @@ function createColumns(headerNames: string[]): GridColDef[] {
   return columns
 }
 
-function Sheet() {
+function FundingTable() {
   const { settings, setSettings} = useContext(SettingsContext)
   const {
-    fundingRateData, 
-    setFundingRateData, 
-    highFundingRateData, 
-    setHighFundingRateData
-} = useContext(DataContext)
+    fundingRateData,
+    highFundingRateData,
+  } = useContext(DataContext)
+
+  const location = useLocation()
+  const [fundingData, setFundingData] = useState([])
+  React.useEffect(() => {
+      console.log(location.pathname)
+      if (location.pathname === "/allFundingRates") {
+          setFundingData(fundingRateData)
+      }
+      else if (location.pathname === "/extremeFundingRates") {
+          setFundingData(highFundingRateData)
+      }
+  }, [location])
 
   return (
       <Box 
         sx={{
-          height: 700,
+          height: 900,
           width: "90%",
           '& .positive': {
             color: 'limegreen',
@@ -69,7 +80,7 @@ function Sheet() {
               )
             }
           rows={
-            populateRows(fundingRateData)
+            populateRows(fundingData)
           }
           getCellClassName={(params: GridCellParams<any, any, number>) => {
             if (params.field === 'currency' || params.value === "-") {
@@ -88,4 +99,4 @@ function Sheet() {
   );
 }
 
-export default Sheet
+export default FundingTable

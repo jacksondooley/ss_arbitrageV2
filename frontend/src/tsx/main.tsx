@@ -8,9 +8,9 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import FundingTable from './table'
 import Settings from "./settings"
-import Sheet from './dataGrid'
+import FundingTable from './fundingTable'
+import ArbTable from './arbTable'
 
 const router = createBrowserRouter([
   {
@@ -23,11 +23,11 @@ const router = createBrowserRouter([
       },
       {
         path: "extremeFundingRates",
-        element: <FundingTable />
+        element: <FundingTable/>
       },
       {
         path: "arbitrage",
-        element: <Sheet/>
+        element: <ArbTable/>
       },
       {
         path: "about",
