@@ -4,6 +4,8 @@ import { useState } from "react"
 import { useOutletContext } from "react-router-dom"
 import { DataContext, SettingsContext } from "./Root"
 import { Box } from "@mui/material";
+import "../scss/settings.css"
+
 function settings() {
     const {settings, setSettings } = useContext(SettingsContext);
       
@@ -20,11 +22,7 @@ function settings() {
     }
 
     return (
-        <Box
-            sx={{
-                width: "20%",
-            }}
-        >
+        <div className="settings-container">
             <div>
                 Enabled Exchanges
             </div>
@@ -47,7 +45,7 @@ function settings() {
                     })}
                 </ul>
             </div>
-        </Box>
+        </div>
     )
 }
 

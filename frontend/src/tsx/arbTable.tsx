@@ -3,6 +3,7 @@ import { DataContext, SettingsContext } from './Root'
 import React, { useContext, useState } from 'react'
 import { Box } from '@mui/material';
 import { useOutletContext, useLocation } from 'react-router-dom'
+import "../scss/table.css"
 
 function populateRows(arbs: any[]): GridRowsProp {
     console.log(arbs)
@@ -39,10 +40,10 @@ function ArbTable() {
     const { arbs } = useContext(DataContext)
 
     return (
+      <div className='table-container'>
         <Box 
           sx={{
-            height: 700,
-            width: "90%",
+            height: "45rem",
             '& .positive': {
               color: 'limegreen',
             },
@@ -52,6 +53,7 @@ function ArbTable() {
           }}
         >
           <DataGrid 
+            className='data-grid'
             columns={
               createColumns([])
               }
@@ -72,6 +74,7 @@ function ArbTable() {
             }}
           />
         </Box>
+      </div>
     );
 }
 

@@ -3,6 +3,8 @@ import { DataContext, SettingsContext } from './Root'
 import React, { useContext, useState } from 'react'
 import { Box } from '@mui/material';
 import { useOutletContext, useLocation } from 'react-router-dom'
+import "../scss/table.css"
+import { auto } from '@popperjs/core';
 
 function populateRows(data: {}): GridRowsProp {
   const rows: GridRowsProp = [];
@@ -59,10 +61,10 @@ function FundingTable() {
   }, [location])
 
   return (
+    <div className='table-container'>
       <Box 
         sx={{
-          height: 900,
-          width: "90%",
+          height: "45rem",
           '& .positive': {
             color: 'limegreen',
           },
@@ -71,7 +73,8 @@ function FundingTable() {
           },
         }}
       >
-        <DataGrid 
+        <DataGrid
+          className='data-grid'
           columns={
             createColumns(
               settings
@@ -96,6 +99,7 @@ function FundingTable() {
           }}
         />
       </Box>
+    </div>
   );
 }
 

@@ -1,25 +1,18 @@
-.neg {
-    color: red;
-}
-
-.pos {
-    color: limegreen;
-}
-
-.column-title > button {
-    justify-content: center;
-    padding: 3px;
-}
-
-.table-row {
-    border-top: 1px solid lightgray;
-}
-
 .table-container {
-    background-color: lightgray;
-    padding: 2vw;
+    margin: 0 auto;
+    display: block;
+    width: fit-content;
+    /* padding: 1rem; */
+    margin: 0 auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-color: white;
+    height: 45rem;
+    /* border: 0.1rem solid rgb(219, 219, 219); */
+    border-radius: 0.25rem;
 }
 
-.table {
-    background-color: white;
+.data-grid {
+    width: fit-content;
+    max-width: 92vw;
 }

@@ -17,8 +17,8 @@ app = Flask(__name__)
 active_exchanges = [
     Bybit(),
     Kucoin(),
-    Coinex(),
-    Phemex(),
+    # Coinex(),
+    # Phemex(),
     # BitGet(),
 ]
 

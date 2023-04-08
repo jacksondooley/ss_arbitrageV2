@@ -5,14 +5,14 @@ import NavBar from './NavBar'
 import { Outlet, useLocation, useOutletContext } from 'react-router-dom'
 import { fetchArbitrageOpportunities, fetchEnabledExchanges, fetchFundingRates, fetchHighFundingRates } from '../apiUtils'
 
-export const SettingsContext = createContext(null)
-export const DataContext = createContext(null)
+export const SettingsContext = createContext([])
+export const DataContext = createContext([])
 
 
 function Root() {
   const [fundingRateData, setFundingRateData] = useState<any>([])
   const [highFundingRateData, setHighFundingRateData] = useState<any>([])
-  const [exchanges, setExchanges] = useState<any>(null)
+  const [exchanges, setExchanges] = useState<any>([])
   const [arbs, setArbs] = useState<any>([])
 
   React.useEffect(() => {

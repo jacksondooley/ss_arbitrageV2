@@ -1,15 +1,13 @@
+import "../scss/about.css"
 
 function About() {
 
     return (
-        <div>
+        <div className="about-container">
             To do
             <ul>
                 <li>
-                    Style Funding Table
-                </li>
-                <li>
-                    Style Arb Table
+                    add exchange and currency logos
                 </li>
                 <li>
                     Write About page
