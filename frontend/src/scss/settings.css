@@ -7,3 +7,11 @@
     border: 0.1rem solid rgb(220, 220, 220);
     border-radius: 0.25rem;
 }
+
+.settings-container > h5 {
+    margin-top: 1rem;
+}
+
+.exchange-list {
+    list-style-type: none;
+}

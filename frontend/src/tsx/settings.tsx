@@ -23,18 +23,16 @@ function settings() {
 
     return (
         <div className="settings-container">
-            <div>
+            <h5>
                 Enabled Exchanges
-            </div>
+            </h5>
             <div>
-                <ul>
+                <ul className="exchange-list">
                     {settings.map((exchange) => {
                         return (
                             <li>
                                 <div>
                                     {exchange.exchangeName.charAt(0).toUpperCase() + exchange.exchangeName.slice(1)}
-                                </div>
-                                <div>
                                     <Checkbox 
                                         checked={exchange.enabled}
                                         onChange={()=>handleCheck(exchange)}
