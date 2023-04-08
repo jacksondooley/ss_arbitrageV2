@@ -3,6 +3,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { useState } from "react"
 import { useOutletContext } from "react-router-dom"
 import { DataContext, SettingsContext } from "./Root"
+import { Box } from "@mui/material";
 function settings() {
     const {settings, setSettings } = useContext(SettingsContext);
       
@@ -19,9 +20,13 @@ function settings() {
     }
 
     return (
-        <div>
+        <Box
+            sx={{
+                width: "20%",
+            }}
+        >
             <div>
-                Selected Exchanges
+                Enabled Exchanges
             </div>
             <div>
                 <ul>
@@ -29,7 +34,7 @@ function settings() {
                         return (
                             <li>
                                 <div>
-                                    {exchange.exchangeName}
+                                    {exchange.exchangeName.charAt(0).toUpperCase() + exchange.exchangeName.slice(1)}
                                 </div>
                                 <div>
                                     <Checkbox 
@@ -42,7 +47,7 @@ function settings() {
                     })}
                 </ul>
             </div>
-        </div>
+        </Box>
     )
 }
 

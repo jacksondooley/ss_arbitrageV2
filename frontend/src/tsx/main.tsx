@@ -11,6 +11,7 @@ import {
 import Settings from "./settings"
 import FundingTable from './fundingTable'
 import ArbTable from './arbTable'
+import About from './about'
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: "about",
-        element: <div>about</div>
+        element: <About />
       },
       {
         path: "settings",
